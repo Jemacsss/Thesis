@@ -1,0 +1,187 @@
+
+\chapter{Research Methodology}
+
+\label{chap:methodology}
+
+This chapter presents the research methodology that will be followed in developing and evaluating the Shallow Water Equation-based Physics-Informed Neural Network (SWE-based PINN) for flood prediction in a selected study area in the Philippines. It discusses the research design, study location, data sources, model parameters, mathematical formulation, neural network architecture, data preprocessing, training procedure, validation methods, and data analysis procedures.
+
+\section{Research Methodology}
+
+This study will employ a computational and mathematical modeling approach to develop a Physics-Informed Neural Network based on the Shallow Water Equations. The proposed model will incorporate physical laws governing water flow into the neural network training process to predict water depth and horizontal water velocity.
+
+The developed model will be evaluated by examining its convergence, approximation error, and consistency with the governing physical equations. Its performance will also be compared with a classical numerical method for solving the Shallow Water Equations.
+
+\section{Research Design}
+
+This study will utilize a quantitative, computational, and model-development research design. It will involve the mathematical formulation of the Shallow Water Equations, implementation of a Physics-Informed Neural Network, and numerical experiments to assess the model's performance.
+
+The study will use quantitative evaluation metrics to measure prediction accuracy, convergence behavior, and physical consistency. Comparisons with a classical numerical method will be conducted to determine the performance of the proposed model.
+
+\section{Research Locale and Period}
+
+The study will focus on selected flood-prone areas in Pasig City, Philippines, particularly areas associated with the Pasig River and its relevant waterways.
+
+The research will cover the period from [Start Date] to [End Date]. The selected study area and simulation domain will be determined based on the availability of geographical, rainfall, and hydrological datasets required for the mathematical model.
+
+\section{Sources of Data}
+
+The study will utilize secondary data obtained from relevant government agencies, public databases, and other reliable sources. These datasets will provide the necessary information for developing, training, and evaluating the proposed model.
+
+The potential data requirements include:
+
+\begin{itemize}
+    \item \textbf{Rainfall Data:} Historical rainfall measurements from relevant meteorological monitoring stations.
+    
+    \item \textbf{Water-Level Data:} Historical water-level measurements from the Pasig River and other relevant waterways.
+    
+    \item \textbf{River Flow and Discharge Data:} Available measurements describing the movement and volume of water within the selected waterways.
+    
+    \item \textbf{Geographic and Elevation Data:} Digital Elevation Models (DEM) and other geographical information describing the terrain of the study area.
+    
+    \item \textbf{Historical Flood Observations:} Available records of flood occurrences, water depths, durations, and affected locations.
+    
+    \item \textbf{Initial and Boundary Conditions:} Data required to establish the initial state of the water system and the conditions along the boundaries of the simulation domain.
+\end{itemize}
+
+The final selection of datasets will depend on their availability, accessibility, completeness, and suitability for the proposed mathematical model.
+
+\section{Model Parameters, Variables, and Initial/Boundary Conditions}
+
+This section identifies the variables and parameters used in formulating and implementing the SWE-based PINN.
+
+The model will consider the following variables:
+
+\begin{itemize}
+    \item \textbf{Spatial Coordinates:} The horizontal coordinates representing the position within the study area.
+    
+    \item \textbf{Time:} The temporal variable representing the progression of the flood simulation.
+    
+    \item \textbf{Water Depth:} The depth of water at a given spatial location and time.
+    
+    \item \textbf{Horizontal Water Velocity:} The velocity components describing water movement in the horizontal directions.
+    
+    \item \textbf{Rainfall:} Precipitation data that may contribute to the source terms of the governing equations.
+\end{itemize}
+
+The model parameters will include relevant physical quantities and numerical settings, such as gravitational acceleration, terrain elevation, friction coefficients, and other parameters required by the governing equations.
+
+Initial and boundary conditions will be established using available hydrological and geographical information to define the behavior of the water system within the simulation domain.
+
+\section{Mathematical Model Formulation}
+
+This section presents the mathematical foundation of the proposed model using the Shallow Water Equations.
+
+\subsection{Governing Shallow Water Equations}
+
+Present the system of partial differential equations describing the movement of water across the selected study area.
+
+\subsection{Conservation of Mass}
+
+Discuss the continuity equation governing the conservation of water mass within the simulation domain.
+
+\subsection{Conservation of Momentum}
+
+Present the momentum equations describing changes in water velocity due to gravitational forces, terrain slope, and friction.
+
+\subsection{Initial Conditions}
+
+Define the initial water depth and horizontal velocity conditions at the beginning of the simulation.
+
+\subsection{Boundary Conditions}
+
+Specify the conditions imposed along the boundaries of the computational domain, including relevant inflow, outflow, or other boundary constraints.
+
+\section{PINN Model Architecture}
+
+This section describes the architecture and mathematical structure of the Physics-Informed Neural Network used to approximate the solutions of the Shallow Water Equations.
+
+\subsection{Neural Network Structure}
+
+Describe the neural network architecture, including its input layer, hidden layers, activation functions, and output layer.
+
+\subsection{Input and Output Variables}
+
+Identify the spatial coordinates and time as the primary network inputs. The outputs will represent the predicted water depth and horizontal water velocity components.
+
+\subsection{Physics-Based Constraints}
+
+Explain how the Shallow Water Equations are incorporated into the network using automatic differentiation to calculate the partial derivatives required for the governing equations.
+
+\subsection{Loss Function Formulation}
+
+Present the composite loss function, including the data loss, initial condition loss, boundary condition loss, and physics-based residual loss.
+
+Explain how the different loss components are combined and minimized during training to obtain physically consistent predictions.
+
+\section{Data Preprocessing}
+
+This section discusses the procedures applied to the collected datasets before they are used in model development and training.
+
+The preprocessing procedures may include:
+
+\begin{itemize}
+    \item Data cleaning and removal of invalid observations.
+    \item Normalization or scaling of numerical variables.
+    \item Identification and handling of missing data.
+    \item Spatial and temporal alignment of datasets.
+    \item Preparation of training, validation, and testing datasets.
+\end{itemize}
+
+These procedures will ensure that the collected data are suitable for numerical computation and neural network training.
+
+\section{Model Training Procedure}
+
+This section explains the process of training the SWE-based PINN.
+
+The training procedure will involve defining the network architecture, initializing its parameters, calculating the composite loss function, and updating the network weights through an optimization algorithm.
+
+The following aspects will be discussed:
+
+\begin{itemize}
+    \item Training and validation data preparation.
+    \item Selection of optimization algorithms.
+    \item Configuration of learning rates and training iterations.
+    \item Selection of collocation points for evaluating the governing equations.
+    \item Monitoring and minimization of the composite loss function.
+    \item Evaluation of convergence during training.
+\end{itemize}
+
+\section{Model Validation and Evaluation}
+
+The developed SWE-based PINN will be evaluated to determine its accuracy, convergence behavior, and physical consistency.
+
+The evaluation will consider the following metrics:
+
+\begin{itemize}
+    \item \textbf{Root Mean Square Error (RMSE):} Measures the average magnitude of prediction errors while giving greater weight to larger errors.
+    
+    \item \textbf{Mean Absolute Error (MAE):} Measures the average absolute difference between predicted and reference values.
+    
+    \item \textbf{Coefficient of Determination ($R^2$):} Measures how well the model explains the variation in the reference data, where appropriate.
+    
+    \item \textbf{Physics-Based Residual Error:} Measures the extent to which the predicted solutions satisfy the governing Shallow Water Equations.
+    
+    \item \textbf{Convergence Analysis:} Examines the behavior of the model's loss function and approximation error throughout the training process.
+\end{itemize}
+
+The PINN predictions will be compared with available measured observations or numerical solutions obtained using a classical method for solving the Shallow Water Equations.
+
+\section{Data Analysis Procedure}
+
+The results generated by the proposed model will be analyzed using quantitative and numerical methods.
+
+The analysis will focus on the following:
+
+\begin{enumerate}
+    \item Examining the convergence behavior of the PINN during training.
+    
+    \item Measuring the approximation error between the predicted and reference solutions.
+    
+    \item Evaluating the physical consistency of the predicted water depth and velocity using the governing equations.
+    
+    \item Comparing the performance of the PINN with a classical numerical method.
+    
+    \item Interpreting the results to determine the effectiveness and limitations of the proposed model for flood prediction.
+\end{enumerate}
+
+The findings will be presented using appropriate tables, graphs, and other visual representations to support the interpretation of the model's performance.

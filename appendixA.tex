@@ -1,0 +1,189 @@
+
+\chapter{ThesisMain.tex File}
+\label{chap:Main}
+
+
+The ThesisMain.tex file contains the basic information about your thesis while the chapter files are just called in the code.  This is the only file you need to compile. Do not run the chapter files.
+
+\section{Preamble}
+
+\begin{verbatim} 
+	\documentclass[12pt]{report}
+	\usepackage{feumathstyle}  
+	\usepackage{amssymb, graphicx, amsmath}
+	\usepackage{hyperref}
+	\usepackage{apacite}
+	\bibliographystyle{apacite}
+	
+	\usepackage{lscape}
+	
+	\newtheorem{definition}{Definition}[chapter]
+	\newtheorem{theorem}{Theorem}[chapter]
+	\newtheorem{lemma}[theorem]{Lemma}
+	\newtheorem{corollary}[theorem]{Corollary}
+	\newtheorem{proposition}[theorem]{Proposition}
+ \end{verbatim}
+
+you may add additional packages but do not remove the prelisted packages especially the feumathstyle package.
+You may add other new formats here too
+
+
+\section{Basic Information}
+
+\begin{verbatim}
+	\title{Thesis Title} %do not capitalize all
+
+\authorfirst{Juan L.}
+\authorlast{Dela Cruz}
+\authorext{Jr.} 
+\authorexttrue %make this a comment if you do not have an extension name e.g. Jr., II, III, etc.
+
+\secondauthorfirst{Juan L.}
+\secondauthorlast{Dela Cruz}
+\secondauthorext{Jr.} 
+\secondauthorexttrue %make this a comment if you do not have an extension name e.g. Jr., II, III, etc.
+
+\thirdauthorfirst{Juan L.}
+\thirdauthorlast{Dela Cruz}
+\thirdauthorext{Jr.} 
+\thirdauthorexttrue %make this a comment if you do not have an extension name e.g. Jr., II, III, etc.
+
+\degree{Bachelor of Science in Applied Mathematics } %enter the specific degree
+\thesistype{thesis} 
+\thesisdocument{undergraduate thesis} 
+
+\specialization{with Information Technology} \specializetrue 
+
+\defensedate{May 12, 2022} %indicate the month, day and year the research was defended
+\submitmonth{May} %indicate the month the manuscript was submitted
+\submityear{2022} %indicate the year the manuscript was submitted 
+
+
+\adviser{Adviser, Ph.D.}%main adviser
+\panel{Panel, Ph.D.} 
+\secondpanel{Panel, Ph.D.} 
+\thirdpanel{Panel, Ph.D.} 
+
+
+\thesisinstructor{May Anne C. Tirado, Ph.D.} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% highlight \bothabsenttrue if the student has only one adviser and one reader
+%% otherwise comment \bothabsenttrue and highlight \coadviser or \coreader which 
+%% ever is applicable. In this case, the package assumes either you have 1 Adviser 
+%% and 2 Readers, or 2 Advisers and 1 Reader. 
+
+\bothabsenttrue
+
+%\coadviser{co-Adviser, Ph.D.} 
+%\coadvisetrue  
+% Make the \coadvisetrue as a comment if there is no adviser
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\deptchair{Genesis John G. Borja} 
+\dean{Dean Name}
+\end{verbatim}
+
+input the names and information about your thesis, authors, adviser, panel, dean.
+
+\section{Abstract and Acknowledgements}
+
+\begin{verbatim}
+		
+	\abs{Type your abstract here.  Your abstract should have a minimum
+		of 150 words and a maximum of 300 words.}
+	
+	\acknowledge{Type your acknowledgements here. It is customary to acknowledge special assistance from extramural agencies. There is no obligation that assistance received from members of the dissertation or thesis committee be acknowledged. \\
+		Acknowledgments should be couched in terms consistent with the
+		scholarly nature of the work. Your name and the date should not appear on this page.}
+\end{verbatim}
+
+type your abstract and acknowledgements here
+
+\section{Chapters and Appendix}
+
+Type your chapters and appendix in separate tex files. This is so it will be easier to edit a shorter code than the full manuscript. 
+
+The chapter files starts with
+\begin{verbatim}
+	\chapter{How to Wrtie Text and Type Equations}
+	\label{chap:typing}
+\end{verbatim}	
+
+The label is optional. This part is when you want to cite this chapter in other chapters. This file just ends with the last line of your chapter content.
+
+\section{Document Outline}
+\begin{verbatim} 
+\beforepreface  
+\abstractpage
+
+\acknowledgetrue
+\acknowledgepage
+
+\tableofcontents
+
+\newpage
+
+
+\listoftables
+\listoffigures
+
+\afterpreface
+
+\include{1typing}
+\include{2compiling}
+\include{3figures}
+\include{4citing}
+%%%%% edit the chapter files. no more preamble. start directly on \chapter{}. add more as needed. you may rename the files and the code arguments accordingly
+
+\appendix
+\input{appendixA}
+\input{appendixB}
+%%%%% edit appendix files. no more preamble. start directly on \chapter. you may rename the files and the code arguments accordingly
+
+\nocite*
+\bibliography{BIBLIOG.bib}
+%to edit your bibliography, open the BIBLIOG.BIB file.
+\end{verbatim}
+
+The first set of commands will create beforepreface using the information you inputed at the start of ThesisMain.tex.  Include the chapters in order and input the appendices in order too.  The chapter file names are used in the arguments. It is best to not use space in the chapter file names.
+
+\section{Bibliography}
+
+Input your references in the Bibliography.bib file
+
+\begin{verbatim}
+@article{Datta-Figueira-2013,
+	author = {Dilip Datta and Jos\’e Rui Figueira},
+	title = {{A real-integer-discrete-coded differential evolution}},
+	journal = {Applied Soft Computing},
+	volume = {13},
+	number = {9},
+	pages = {3884--3893},
+	year = {2013}
+}
+@book{Deb-2001,
+	author = {Kalyanmoy Deb},
+	title = {{Multi-Objective Optimization using Evolutionary Algorithms}},
+	publisher = {John Wiley \& Sons Ltd.},
+	address = {Chichester, England},
+	year = {2001}
+}
+\end{verbatim}
+
+\section{Folder Contents}
+All your thesis files must be in one folder before you compile/run ThesisMain.tex
+
+\begin{enumerate}
+	\item ThesisMain.tex
+	\item feumathstyle.sty
+	\item FEUlogo.png
+	\item IASlogo.png
+	\item BIBLIOG.bib
+	\item chapter tex files
+	\item appendix tex files
+\end{enumerate}
+
+See the sample compiled ThesisMain.pdf to see the intended output.

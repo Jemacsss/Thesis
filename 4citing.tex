@@ -1,0 +1,84 @@
+\chapter{How to Cite References}
+\label{chap:citing}
+
+First edit the file {\tt bibliog.bib} by adding an entry for each
+reference used in your thesis.  Follow the format in the sample
+file.
+
+\begin{verbatim}
+@BOOK{bsw,
+  author={H. T. Banks and R. C. Smith and Y. Wang},
+  title={Smart Material Structures: Modeling Estimation
+         and Control},
+  year=1996,
+  publisher={Masson/John Wiley},
+  address={Paris/Chichester}
+}
+
+@ARTICLE{BanksIto1,
+  author={H. T. Banks and K. Ito},
+  year=1997,
+  title={Approximation in {LQR} Problems for Infinite Dimensional
+    Systems with Unbounded Input Operators},
+  journal={Journal of Mathematical Systems, Estimation, and Control},
+  volume=7,
+  pages={1-34},
+  publisher={Birkh\"{a}user Boston}
+}
+
+@PHDTHESIS{Ric,
+  author = {R. C. H. del Rosario },
+  year = 1998,
+  title = {Computational Methods for Feedback Control in
+        Structural Systems},
+  school = {N. C. State University}
+}
+
+@techreport{RalphRic3a,
+  author = {R. C. H. del Rosario and R. C. Smith},
+  year = 1997,
+  title = {{LQR} Control of Thin Shell Dynamics: Formulation and
+           Numerical Implementation},
+  institution = {Institute for Computer Applications in Science
+    and Engineering},
+  number={ICASE Report 97-59},
+  address={NASA Langley Research Center, Hampton},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   %MISC   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@BOOKLET{Le,
+  author={A. W. Leissa},
+  title={Vibrations of Shells},
+  year=1973,
+  publisher={NASA SP-288},
+  howpublished={Reprinted by the Acoustical Society of America 
+  	through the American Institute of Physics}
+}
+
+@manual{d31ref,
+  organization = {{Institute} of Electrical and 
+  	Electronics Engineers},
+  year = 1978,
+  title = {IEEE Standard on Piezoelectricity},
+  address={New York}
+}
+
+@manual{pside,
+  title = {Specification of PSIDE},
+  author={Jacques J.B. de Swart and Walter M. Lioen and 
+  	Wolter A. van der Veen},
+  year=1998,
+  note={Avalable at http://www.cwi.nl/cwi/projects/PSIDE/}
+}
+\end{verbatim}
+
+
+Click from the BibTex icon (if you are using WinEdit Program) or
+use the BibTex command if you are in command line mode.  It is
+suggested that you do this twice.  Then compile the main tex file
+using the LaTeX command.
+
+Use the {\tt cite} command to cite a reference.  For example,
+\verb|\cite{bsw}| cites the book labeled
+``bsw''. This will give us {\cite{bsw}}.

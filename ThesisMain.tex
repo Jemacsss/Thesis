@@ -1,0 +1,127 @@
+%%%%%%%%%%%%%%%%%%%
+% Mathematics Department                 %
+% FEU                                       %
+% Undergraduate Thesis Template     %
+% Edited May 2022                           %
+%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, a4paper]{report}
+\usepackage{feumathstyle}  
+\usepackage{amssymb, graphicx, amsmath}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{apacite}
+\bibliographystyle{apacite}
+
+\usepackage{float}
+\usepackage[english]{babel}
+
+
+\usepackage{lscape}
+
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\begin{document}
+	
+	\title{Thesis Title} %do not capitalize all
+	
+	\authorfirst{Elisha Sophia S.}
+	\authorlast{Borromeo}
+	%\authorext{Jr.} 
+	\authorexttrue %make this a comment if you do not have an extension name e.g. Jr., II, III, etc.
+
+	\secondauthorfirst{Jan Edward F.}
+	\secondauthorlast{Macagba}
+	% \secondauthorext{Jr.} 
+	\secondauthorexttrue %make this a comment if you do not have an extension name e.g. Jr., II, III, etc.
+
+	\thirdauthorfirst{Consuelo B.}
+	\thirdauthorlast{Mercado}
+	%\thirdauthorext{Jr.} 
+	\thirdauthorexttrue %make this a comment if you do not have an extension name e.g. Jr., II, III, etc.
+	
+	\degree{Bachelor of Science in Applied Mathematics } %enter the specific degree
+	\thesistype{thesis} 
+	\thesisdocument{undergraduate thesis} 
+	
+	\specialization{(Information Technology Track)} \specializetrue 
+	
+	\defensedate{May 12, 2022} %indicate the month, day and year the research was defended
+	\submitmonth{May} %indicate the month the manuscript was submitted
+	\submityear{2022} %indicate the year the manuscript was submitted 
+	
+	
+	\adviser{May Anne C. Tirado, Ph.D.}%main adviser
+	\panel{Panel, Ph.D.} 
+	\secondpanel{Panel, Ph.D.} 
+	\thirdpanel{Panel, Ph.D.} 
+	
+
+	\thesisinstructor{May Anne C. Tirado, Ph.D.} 
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% highlight \bothabsenttrue if the student has only one adviser and one reader
+	%% otherwise comment \bothabsenttrue and highlight \coadviser or \coreader which 
+	%% ever is applicable. In this case, the package assumes either you have 1 Adviser 
+	%% and 2 Readers, or 2 Advisers and 1 Reader. 
+	
+	\bothabsenttrue
+	
+	%\coadviser{co-Adviser, Ph.D.} 
+	%\coadvisetrue  
+	% Make the \coadvisetrue as a comment if there is no adviser
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	
+	\deptchair{Genesis John G. Borja} 
+	\dean{Rowena Capulong Reyes, Ph.D.}
+	
+	
+	\abs{Type your abstract here.  Your abstract should have a minimum
+		of 150 words and a maximum of 300 words.}
+	
+	\acknowledge{Type your acknowledgements here. It is customary to acknowledge special assistance from extramural agencies. There is no obligation that assistance received from members of the dissertation or thesis committee be acknowledged. \\
+		Acknowledgments should be couched in terms consistent with the
+		scholarly nature of the work. Your name and the date should not appear on this page.}
+	
+	
+    	\beforepreface  
+	\abstractpage
+		
+	\acknowledgetrue
+	\acknowledgepage
+	
+	\tableofcontents
+	
+	\newpage
+
+
+	\listoftables
+	\listoffigures
+	
+	\afterpreface
+	
+
+	\include{1typing}
+	\include{2compiling}
+	\include{3figures}
+	\include{4citing}
+	%%%%% edit the chapter files. no more preamble. start directly on \chapter{}. add more as needed. you may rename the files and the code arguments accordingly
+	
+	\appendix
+	\input{appendixA}
+	\input{appendixB}
+	%%%%% edit appendix files. no more preamble. start directly on \chapter. you may rename the files and the code arguments accordingly
+	
+	\nocite*
+	\bibliography{BIBLIOG.bib}
+	%to edit your bibliography, open the BIBLIOG.BIB file.
+	
+	
+\end{document}
+
