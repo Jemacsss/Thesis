@@ -1,3 +1,4 @@
+# LaTeX auxiliary files
 *.aux
 *.bbl
 *.blg
@@ -7,11 +8,5 @@
 *.out
 *.synctex.gz
 *.toc
-*.pdf
 *.lof
 *.lot
-*.aux
-*.toc
-*.log
-*.fls
-*.fdb_latexmk
