@@ -27,7 +27,7 @@
 
 \begin{document}
 	
-	\title{Thesis Title} %do not capitalize all
+	\title{Predicting the Next Wave: A Shallow Water Equation-Based Physics-Informed Neural Network } %do not capitalize all
 	
 	\authorfirst{Elisha Sophia S.}
 	\authorlast{Borromeo}
@@ -61,7 +61,7 @@
 	\thirdpanel{Panel, Ph.D.} 
 	
 
-	\thesisinstructor{May Anne C. Tirado, Ph.D.} 
+	\thesisinstructor{Richmond Riyadhen Lim} 
 	
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,12 +78,15 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	
-	\deptchair{Genesis John G. Borja} 
-	\dean{Rowena Capulong Reyes, Ph.D.}
+	\deptchair{Flordeliza F. Francisco} 
+	\dean{Myra D. Landagan, Ph.D.}
 	
 	
-	\abs{Type your abstract here.  Your abstract should have a minimum
-		of 150 words and a maximum of 300 words.}
+	\abs{Flooding is a recurring problem in highly urbanized areas of Metro Manila, including Pasig City, where heavy rainfall, limited drainage capacity, and changes in land use contribute to the accumulation of surface water. Traditional hydrodynamic models solve the governing equations numerically but may demand substantial computational resources and detailed environmental data, while purely data-driven machine learning models may not satisfy the physical laws governing water flow. This study develops and evaluates a Shallow Water Equation-based Physics-Informed Neural Network (SWE-based PINN) for flood modeling in a selected area of Pasig City.
+
+	The Shallow Water Equations, which express the conservation of mass and momentum in depth-averaged flow, serve as the governing mathematical model. They are incorporated into the training of the neural network through a composite loss function that combines data, governing-equation residual, initial condition, and boundary condition terms, with the residuals computed by automatic differentiation. The network takes spatial, temporal, rainfall, terrain, and simplified drainage variables as inputs and predicts water depth and horizontal water velocity. The study follows a quantitative, computational, and model-development design that uses secondary data such as rainfall records, water-level and discharge measurements, digital elevation models, and historical flood observations.
+
+	The performance of the model is assessed in terms of convergence, approximation error, and physical consistency, particularly the satisfaction of mass and momentum conservation. Evaluation metrics include root mean square error, mean absolute error, the coefficient of determination, and physics-based residual error. The predictions of the PINN are compared with a classical numerical method for solving the Shallow Water Equations. The findings are limited to the selected study area and the available datasets, and the model is not intended to replace official flood forecasting systems. The study aims to examine the applicability of a physics-informed computational approach to urban flood modeling and to serve as a foundation for future research on PINNs and the Shallow Water Equations.}
 	
 	\acknowledge{Type your acknowledgements here. It is customary to acknowledge special assistance from extramural agencies. There is no obligation that assistance received from members of the dissertation or thesis committee be acknowledged. \\
 		Acknowledgments should be couched in terms consistent with the
