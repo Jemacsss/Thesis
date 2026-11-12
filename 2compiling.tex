@@ -369,84 +369,79 @@ The weighting parameters determine the relative importance of the individual los
 
 \section{Review of Related Literature}
 
-% This section discusses existing literature, concepts, and theoretical discussions related to flood prediction, hydrodynamic modeling, and the application of machine learning and Physics-Informed Neural Networks.
-
-This section discusses existing literature and theoretical discussions related to flood prediction, hydrodynamic modeling, the Shallow Water Equations, and the application of machine learning and Physics-Informed Neural Networks.
+This section discusses existing literature and theoretical discussions related to flood prediction, hydrodynamic modeling, the Shallow Water Equations, and the application of machine learning, hybrid models, and Physics-Informed Neural Networks.
 
 \subsection{Flood Prediction and Modeling}
-
-% Review the existing approaches used in flood prediction and modeling, including traditional mathematical and computational techniques.
 
 Flood prediction and modeling involve estimating the behavior of floodwater under specified environmental and hydrological conditions. These approaches may be used to estimate water depth, flow velocity, inundation extent, and the temporal development of flooding.
 
 Traditional flood modeling commonly relies on hydrological and hydrodynamic methods. Hydrological models describe the transformation of rainfall into runoff, while hydrodynamic models represent the movement of water through rivers, channels, and surface areas. The selection of a modeling approach depends on the purpose of the study, the available data, and the level of detail required.
 
-Guo, Guan, and Yu (2021) reviewed urban surface water flood modeling approaches and discussed the use of drainage network models, shallow-water-based models, hydrogeomorphic approaches, and other methods. Their review emphasized the importance of considering computational efficiency, model complexity, and data availability when selecting a flood modeling approach.
+\citeA{guo2021} reviewed urban surface water flood modeling approaches and discussed the use of drainage network models, shallow-water-based models, hydro-geomorphic approaches, and other methods. Their review emphasized the importance of considering computational efficiency, model complexity, and data availability when selecting a flood modeling approach.
+
+More recent literature has focused on the trade-off between model realism and speed. \citeA{hybridreview2026} reported that traditional hydrodynamic models are based on physical laws and are therefore realistic and explainable, but can require considerable time and computing power. Machine learning models, in contrast, can be much faster, which is useful for real-time warnings, but depend heavily on data and can be difficult to interpret. The timing issue is practical: \citeA{dikebreach2024} noted that a hydrodynamic simulation of a large area can take 6 to 10 hours, whereas emergency decisions may require predictions within seconds or minutes.
 
 The literature indicates that flood prediction requires a balance between computational efficiency and the ability to represent physical processes. This consideration is relevant to the present study, which investigates the use of a PINN as an alternative computational approach for solving the governing equations of flood flow.
 
 \subsection{Flood Modeling in Urban Areas}
 
-% Discuss the challenges of urban flood modeling, including complex terrain, land use, drainage systems, and surface runoff.
-
 Urban flood modeling presents additional challenges because of the complex characteristics of developed environments. Buildings, roads, drainage networks, and variations in terrain elevation influence the direction and accumulation of water. Impermeable surfaces may also increase surface runoff during rainfall events.
 
-Guo et al. (2021) explained that urban surface water flood models may use simplified or full forms of the Shallow Water Equations. The complexity of the model affects the required input data, computational cost, and the amount of flood information that can be represented.
+\citeA{guo2021} explained that urban surface water flood models may use simplified or full forms of the Shallow Water Equations. The complexity of the model affects the required input data, computational cost, and the amount of flood information that can be represented.
 
-Urban flood models may also consider the interaction between surface water and underground drainage systems. However, detailed representations of drainage networks require information about pipes, inlets, outlets, and other infrastructure. The availability of these data may affect the complexity and reliability of the model.
+Urban flood models may also consider the interaction between surface water and underground drainage systems. However, detailed representations of drainage networks require information about pipes, inlets, outlets, and other infrastructure. The availability of these data may affect the complexity and reliability of the model. In the study of \citeA{liu2026}, which coupled a stormwater drainage model with a surface-flow model, elevation-related features and drainage features such as manholes were among the most influential variables explaining predicted flood depth. This supports the consideration of terrain and drainage in urban flood modeling, while also showing that such studies depend on high-quality spatial data.
 
 For the present study, urban flood modeling will focus on the selected area of Pasig City. Terrain elevation and rainfall will be considered as important inputs. Drainage may be represented through a simplified removal term, subject to the availability of suitable data. The study will not attempt to fully simulate every component of the underground drainage infrastructure.
 
 \subsection{Shallow Water Equation Applications}
 
-% Review the applications of the Shallow Water Equations in simulating water movement, flood propagation, and water depth distribution.
-
 The Shallow Water Equations are widely applied in flood modeling because they describe the conservation of mass and momentum in depth-averaged water flow. They can be used to estimate the movement and distribution of water over terrain.
 
 SWE-based models may be implemented using different numerical methods, including finite difference, finite volume, and finite element approaches. These methods approximate the governing equations using discrete computational representations.
 
-Guo et al. (2021) discussed the application of shallow-water-based models to urban surface flooding and noted their ability to provide spatially distributed information about floodwater depth and velocity. The review also highlighted that the computational cost and data requirements of such models may increase when detailed urban features are considered.
+\citeA{guo2021} discussed the application of shallow-water-based models to urban surface flooding and noted their ability to provide spatially distributed information about floodwater depth and velocity. The review also highlighted that the computational cost and data requirements of such models may increase when detailed urban features are considered.
+
+The mathematical form in which the SWE are written can also matter when they are solved with neural networks. \citeA{tian2025} compared the conservation form, the primitive variables form, and a variable-conservation form of the two-dimensional SWE in a PINN setting and found that the choice of formulation influenced optimization and approximation accuracy.
 
 The SWE are relevant to the present study because they provide the physical basis for the proposed PINN. By incorporating the equations into the neural network loss function, the model will be trained to approximate flood behavior while considering the governing principles of water flow.
 
 \subsection{Physics-Informed Neural Networks in Hydrology}
 
-% Discuss the use of PINNs in hydrological modeling, particularly their ability to incorporate physical constraints into data-driven prediction models.
+Physics-Informed Neural Networks have been investigated as a computational approach for solving differential equations and incorporating physical knowledge into machine learning models. \citeA{raissi2019} introduced a framework for forward problems, in which the solution of a known partial differential equation is approximated, and inverse problems, in which unknown parameters or terms of the equation are inferred from data. In their continuous-time formulation, a neural network approximates the solution, automatic differentiation computes the required derivatives, and the network is trained on a loss that combines data, initial condition, boundary condition, and equation-residual terms. They also proposed a discrete-time formulation that incorporates implicit Runge-Kutta schemes.
 
-Physics-Informed Neural Networks have been investigated as a computational approach for solving differential equations and incorporating physical knowledge into machine learning models. The framework introduced by Raissi et al. (2019) combines neural network approximation with governing differential equations through a composite loss function.
+In flood-related applications, PINNs can be used to represent processes governed by mathematical equations, such as water flow and rainfall-driven runoff. \citeA{hybridreview2026} found that hybridization of flood models can occur at the input, the model structure, or the processing and output stages, and that PINNs, which modify the model structure by embedding physical laws, are especially promising because they may yield more physically realistic and generalizable predictions.
 
-In hydrological applications, PINNs may be used to represent processes governed by mathematical equations, such as water flow, groundwater movement, and rainfall-related processes. Their ability to combine physical constraints and available observations makes them relevant to problems in which data may be limited or incomplete.
-
-However, the use of PINNs in hydrological modeling also presents challenges. The optimization process may be affected by the nonlinear behavior of the governing equations, differences in the scales of loss components, and the distribution of training points. Therefore, the performance of a PINN depends not only on the physical equations but also on its architecture, training configuration, and evaluation process.
+However, the use of PINNs also presents challenges. \citeA{raissi2019} showed that performance can depend on the network architecture, training strategy, placement of collocation points, and weighting of the loss components, and that the method can become computationally expensive for large domains. \citeA{tian2025} likewise reported issues of training instability, loss imbalance, and sensitivity to the equation formulation in shallow water problems. Therefore, the performance of a PINN depends not only on the physical equations but also on its architecture, training configuration, and evaluation process.
 
 The present study applies this framework to the two-dimensional Shallow Water Equations. The governing equations will be incorporated into the PINN loss function to constrain the predicted water depth and horizontal velocity.
 
 \subsection{Machine Learning for Flood Prediction}
 
-% Review machine learning approaches used in flood prediction, including artificial neural networks and other data-driven methods. Discuss their strengths and limitations.
+Machine learning approaches have been used in flood prediction to identify relationships between rainfall, water levels, and flood-related variables. Artificial Neural Networks (ANNs) and Long Short-Term Memory (LSTM) networks are examples of approaches that can learn patterns from historical or simulated data.
 
-Machine learning approaches have been used in flood prediction to identify relationships between rainfall, water levels, and flood-related variables. Artificial Neural Networks and Long Short-Term Memory (LSTM) networks are examples of approaches that can learn patterns from historical or simulated data.
+LSTM networks are designed to process sequential information \cite{lstmreview2020}. Their structure allows them to retain information from previous time steps, making them suitable for tasks involving rainfall sequences, water-level records, and time-dependent flood behavior. \citeA{dikebreach2024} applied an LSTM to predict flood inundation after a dike breach. The network took the discharge through the breach as input and predicted water depth over a grid of 34,629 cells, using 73 scenarios generated by a hydrodynamic model. On unseen scenarios, the model matched the hydrodynamic results closely and ran in a fraction of a second, compared with 6 to 10 hours for the hydrodynamic model. The authors, however, noted that the model depended on simulation data, was location-specific, required many simulations, did not enforce physical laws explicitly, and performed poorly immediately after the onset of flooding.
 
-LSTM networks are designed to process sequential information. Their structure allows them to learn temporal relationships in data, making them suitable for tasks involving rainfall sequences, water-level records, and time-dependent flood behavior.
+Data-driven approaches may provide efficient predictions when sufficient training data are available. However, their predictions depend on the patterns learned from the training data, and they do not automatically satisfy the governing equations of water flow unless physical constraints are explicitly incorporated \cite{liu2026,hybridreview2026}.
 
-Data-driven approaches may provide efficient predictions when sufficient training data are available. However, their predictions depend on the patterns learned from the training data. They do not automatically satisfy the governing equations of water flow unless physical constraints are explicitly incorporated.
-
-PINNs differ from purely data-driven models because they include physical equations as part of the training objective. This distinction is important in the present study, where the proposed model will be evaluated based on both approximation error and physical consistency.
+PINNs differ from purely data-driven models because they include physical equations as part of the training objective. For example, \citeA{praveen2024} reported that a PINN for real-time flood prediction outperformed ANN and LSTM models, while \citeA{liu2026} reported that a SWE-based PINN outperformed DNN, CNN, and LSTM models. This distinction is important in the present study, where the model will be evaluated based on both approximation error and physical consistency.
 
 A classical numerical method will be used as the primary comparison method for assessing the PINN's approximation of the Shallow Water Equations. If an LSTM model is included as an additional baseline, its prediction accuracy may be evaluated using the same reference dataset and error metrics. The LSTM comparison will be treated as a separate data-driven evaluation.
 
 \subsection{Flood Risk in Pasig City and Metro Manila}
 
-% Discuss the flood-related conditions and challenges in Pasig City and Metro Manila. Include relevant information about rainfall, river systems, urban development, and flood susceptibility.
-
 Metro Manila is a highly urbanized region where flood behavior may be influenced by rainfall, river systems, terrain, and urban infrastructure. Flood modeling in the region requires consideration of both the hydrological conditions and the characteristics of the built environment.
-
-The Marikina-Pasig River Basin has been the subject of flood modeling research. A study published in the Journal of Hydrology: Regional Studies in 2022 developed an integrated multiscale rainfall-runoff and inundation model for an extreme rainfall event in the Marikina-Pasig River Basin. The study examined floodwater accumulation, depth, and flow source, demonstrating the relevance of integrated modeling approaches in the Philippine setting.
 
 The study provides regional context for the present research because Pasig City is located within the broader Metro Manila urban environment associated with the Pasig River system. However, the results of a basin-level study cannot automatically be applied to every location within Pasig City. Local terrain, rainfall conditions, and available flood observations must be considered.
 
 The present study will focus on the development and evaluation of a SWE-based PINN within a selected study area in Pasig City. Its findings will be limited to the modeled area and the datasets used in the implementation.
 
+\subsection{Emerging Computational Approaches for Flood Prediction}
+
+Beyond classical numerical and machine learning methods, other computational paradigms have been proposed for climate and flood problems. \citeA{quantumclimate} reviewed the potential of quantum computing for climate resilience and sustainability, discussing quantum optimization, quantum machine learning, and quantum simulation, including techniques such as the Quantum Approximate Optimization Algorithm, quantum annealing, quantum support vector machines, and quantum convolutional neural networks. They identified flood and disaster prediction as possible applications.
+
+The authors also noted that most of these applications remain at an early stage. Current quantum hardware is limited by noise, scalability, and the number of available qubits, so hybrid quantum-classical approaches are currently more practical. The review also did not develop or test a specific model on a climate dataset, and few studies compare quantum approaches with strong classical and physics-informed models.
+
+This literature is outside the scope of the present study, which uses classical computation. It is included to show that research on computational approaches for flood prediction is still developing and that physics-informed and hybrid methods such as PINNs are among the practical options currently available.
 \section{Review of Related Studies}
 
 % This section presents previous research studies that are directly related to the proposed research. Focus on the methods, datasets, results, and findings of each study.
