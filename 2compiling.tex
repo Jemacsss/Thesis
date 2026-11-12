@@ -3,116 +3,554 @@
 
 \label{chap:review}
 
-This chapter presents the concepts, theories, literature, and previous studies relevant to the development of a Shallow Water Equation-based Physics-Informed Neural Network for flood prediction. Since the study combines several fields, namely mathematics, physics, machine learning, and flood prediction, the discussion is organized to establish the theoretical and scientific foundation of the proposed model.
+% This chapter presents the concepts, theories, literature, and previous studies relevant to the development of a Shallow Water Equation-based Physics-Informed Neural Network for flood prediction. Since the study combines several fields, namely mathematics, physics, machine learning, and flood prediction, the discussion is organized to establish the theoretical and scientific foundation of the proposed model.
+
+This chapter presents the concepts, theories, literature, and previous studies relevant to the development of a Shallow Water Equation-based Physics-Informed Neural Network (PINN) for flood prediction in Pasig City. The discussion establishes the mathematical and computational foundation of the proposed model by examining flooding, hydrodynamic modeling, artificial neural networks, Physics-Informed Neural Networks, and the Shallow Water Equations. It also reviews previous applications of these approaches in flood modeling and identifies the research gap addressed by the present study.
 
 \section{Preliminaries}
 
-This section introduces the fundamental concepts necessary for understanding the study. It provides an overview of flooding, hydrodynamic modeling, artificial neural networks, and Physics-Informed Neural Networks.
+% This section introduces the fundamental concepts necessary for understanding the study. It provides an overview of flooding, hydrodynamic modeling, artificial neural networks, and Physics-Informed Neural Networks.
+
+This section introduces the fundamental concepts necessary for understanding the proposed study. It discusses the characteristics of flooding, hydrodynamic modeling, artificial neural networks, and Physics-Informed Neural Networks. These concepts provide the foundation for understanding how the governing equations of water flow can be incorporated into a neural network for flood prediction.
 
 \subsection{Fundamental Concepts of Flooding}
 
-Discuss the basic concepts of flooding, including its causes, characteristics, and effects. Explain important flood-related variables such as water depth, flow velocity, rainfall, and surface runoff.
+% Discuss the basic concepts of flooding, including its causes, characteristics, and effects. Explain important flood-related variables such as water depth, flow velocity, rainfall, and surface runoff.
+
+Flooding occurs when water accumulates in an area beyond its normal capacity to contain or drain it. It may result from heavy rainfall, overflowing rivers, inadequate drainage capacity, and changes in land use. In urban areas, the presence of buildings, roads, and other impermeable surfaces can reduce the infiltration of water into the ground, resulting in increased surface runoff. When the amount of runoff exceeds the capacity of the surrounding drainage system, water may accumulate on streets and other low-lying areas.
+
+Flood behavior is influenced by several hydrological and physical variables. Rainfall refers to the amount of water supplied to the ground through precipitation. Surface runoff is the portion of rainfall that flows over the ground instead of infiltrating into the soil. Terrain elevation influences the direction and distribution of water flow, while drainage systems provide pathways for collecting and removing excess water.
+
+Water depth and flow velocity are important variables in flood modeling. Water depth refers to the vertical distance between the ground surface and the water surface. Flow velocity describes the speed and direction of water movement. In a two-dimensional flood model, velocity is commonly represented by two components, namely the velocity in the $x$-direction and the velocity in the $y$-direction.
+
+These variables are important in understanding the development and movement of floodwater. In the present study, water depth and horizontal water velocity will be the primary variables predicted by the proposed SWE-based PINN.
 
 \subsection{Hydrodynamic Modeling}
 
-Discuss hydrodynamic modeling and its role in simulating the movement and distribution of water. Introduce the use of mathematical equations and numerical methods in representing flood behavior.
+% Discuss hydrodynamic modeling and its role in simulating the movement and distribution of water. Introduce the use of mathematical equations and numerical methods in representing flood behavior.
+
+Hydrodynamic modeling refers to the mathematical and computational representation of water movement. It uses governing equations derived from physical principles to describe how water changes in depth, velocity, and distribution over space and time. Hydrodynamic models are commonly used in flood simulation, river flow analysis, coastal processes, and water resource management.
+
+The movement of water can be described using mathematical equations such as the Navier-Stokes equations. However, these equations may be simplified under certain assumptions to represent shallow water flow. One commonly used formulation is the Shallow Water Equations, which describe the conservation of mass and momentum in depth-averaged water flow.
+
+Traditional hydrodynamic models solve governing equations using numerical methods. Common approaches include finite difference, finite volume, and finite element methods. These methods approximate the mathematical solution over a computational domain divided into discrete spatial and temporal points.
+
+Although numerical methods are widely used in flood modeling, their computational requirements may increase when the study area is large or when detailed terrain and flow conditions are considered. Urban flood modeling may also require detailed information regarding terrain elevation, rainfall, and drainage systems. These requirements motivate the investigation of alternative computational approaches, including Physics-Informed Neural Networks.
 
 \subsection{Artificial Neural Networks}
 
-Introduce artificial neural networks, including their basic structure, components, and learning process. Explain how neural networks can be used to approximate complex mathematical relationships.
+% Introduce artificial neural networks, including their basic structure, components, and learning process. Explain how neural networks can be used to approximate complex mathematical relationships.
+
+Artificial Neural Networks (ANNs) are computational models inspired by the structure of biological neural networks. They consist of interconnected processing units called neurons, which are organized into input, hidden, and output layers. Each neuron receives information, applies weights and biases, and passes the result through an activation function.
+
+A general mathematical representation of a neural network is given by
+
+\[
+\mathbf{y}=f_{\theta}(\mathbf{x}),
+\]
+
+where $\mathbf{x}$ represents the input variables, $\mathbf{y}$ represents the predicted output, $f_{\theta}$ denotes the neural network function, and $\theta$ represents the trainable parameters of the network.
+
+During training, the network adjusts its parameters to minimize a loss function that measures the difference between predicted and reference values. Optimization algorithms such as gradient descent and its variants are commonly used to update the network parameters.
+
+ANNs can approximate complex nonlinear relationships between input and output variables. In flood prediction, they may be trained using rainfall, water level, terrain, or historical flood observations to estimate flood-related variables.
+
+However, a purely data-driven ANN depends heavily on the quality and quantity of its training data. Its predictions may not automatically satisfy the physical laws governing water flow. This limitation provides the motivation for incorporating physical equations into the neural network training process.
 
 \subsection{Physics-Informed Neural Networks}
 
-Discuss Physics-Informed Neural Networks and how physical laws and governing equations are incorporated into neural network training. Explain their advantages and limitations compared with purely data-driven approaches.
+% Discuss Physics-Informed Neural Networks and how physical laws and governing equations are incorporated into neural network training. Explain their advantages and limitations compared with purely data-driven approaches.
+
+Physics-Informed Neural Networks (PINNs) are neural networks that incorporate governing physical equations into their training process. Rather than relying exclusively on observed data, PINNs use mathematical equations to impose physical constraints on the predicted solutions.
+
+Raissi, Perdikaris, and Karniadakis (2019) introduced a framework in which differential equations are incorporated into neural network loss functions. Through this approach, the network is trained to approximate solutions that are consistent with both available data and the governing physical laws.
+
+A PINN generally consists of a neural network that approximates the solution of a physical system and a loss function that includes the residuals of the governing equations. The residuals measure how closely the predicted values satisfy the mathematical equations.
+
+For flood modeling, the Shallow Water Equations can be incorporated into the PINN loss function. The network can then be trained to predict water depth and velocity while minimizing the residuals of the equations describing the conservation of mass and momentum.
+
+One potential advantage of PINNs is their ability to combine observational data with physical constraints. This may be useful when available flood observations are limited. However, PINNs also have limitations, including training difficulties, sensitivity to loss weighting, and challenges in approximating discontinuous flow behavior. Therefore, their accuracy and physical consistency must be evaluated rather than assumed.
 
 \section{Theoretical Background}
 
-This section presents the mathematical and computational theories that serve as the foundation of the proposed SWE-based PINN.
+% This section presents the mathematical and computational theories that serve as the foundation of the proposed SWE-based PINN.
+
+This section presents the mathematical and computational theories that serve as the foundation of the proposed SWE-based PINN. It discusses the governing equations of shallow water flow, the principles of conservation of mass and momentum, and the mathematical structure of the PINN.
 
 \subsection{Shallow Water Equations}
 
-Present the Shallow Water Equations and explain their application in modeling flood flow and water movement over terrain.
+% Present the Shallow Water Equations and explain their application in modeling flood flow and water movement over terrain.
+
+The Shallow Water Equations (SWE) are a system of partial differential equations used to describe the movement of water with a relatively small depth compared with its horizontal dimensions. They are derived from the principles of conservation of mass and momentum and are commonly used in flood modeling.
+
+The two-dimensional SWE represent water flow through the horizontal directions while accounting for changes in water depth, terrain elevation, rainfall, and friction. The equations are commonly derived from the Navier-Stokes equations under assumptions such as hydrostatic pressure distribution and depth-averaged horizontal velocity.
+
+In the present study, the SWE will serve as the governing mathematical model for describing flood behavior in the selected study area of Pasig City. The equations will be incorporated into the Physics-Informed Neural Network to constrain its predictions.
 
 \subsection{Conservation of Mass}
 
-Discuss the principle of conservation of mass and its mathematical representation in the Shallow Water Equations.
+% Discuss the principle of conservation of mass and its mathematical representation in the Shallow Water Equations.
+
+The principle of conservation of mass states that mass cannot be created or destroyed within a system, although it may enter or leave the system through external sources or boundaries.
+
+For shallow water flow, conservation of mass is represented by the continuity equation. In two dimensions, the equation may be expressed as
+
+\[
+\frac{\partial h}{\partial t}
++
+\frac{\partial (hu)}{\partial x}
++
+\frac{\partial (hv)}{\partial y}
+=
+R-D,
+\]
+
+where $h$ is the water depth, $u$ and $v$ are the horizontal velocity components, $R$ is the rainfall input, and $D$ is a simplified drainage-removal rate.
+
+The term $\frac{\partial h}{\partial t}$ represents the rate of change of water depth over time. The terms $\frac{\partial (hu)}{\partial x}$ and $\frac{\partial (hv)}{\partial y}$ represent the changes in water flux in the horizontal directions.
+
+The rainfall term $R$ accounts for the addition of water to the surface. The drainage term $D$ represents the removal of water from the modeled surface domain. For consistency, $R$ and $D$ must use compatible units, such as meters per second.
+
+In this study, drainage will be represented through a simplified removal term when sufficient data are available. This representation does not constitute a complete simulation of an underground drainage network. Detailed pipe flow, manhole interactions, and surface-to-sewer exchange may require a separate coupled drainage model.
 
 \subsection{Conservation of Momentum}
 
-Explain the principle of conservation of momentum and its role in describing the movement and velocity of water.
+% Explain the principle of conservation of momentum and its role in describing the movement and velocity of water.
+
+The principle of conservation of momentum describes how the movement of water changes due to forces acting on the flow. These forces include gravity, pressure gradients, terrain slope, and friction.
+
+The two-dimensional momentum equations for shallow water flow may be expressed in conservative form as
+
+\[
+\frac{\partial (hu)}{\partial t}
++
+\frac{\partial}{\partial x}
+\left(hu^2+\frac{1}{2}gh^2\right)
++
+\frac{\partial (huv)}{\partial y}
+=
+-gh\frac{\partial z}{\partial x}
++
+S_{fx},
+\]
+
+and
+
+\[
+\frac{\partial (hv)}{\partial t}
++
+\frac{\partial (huv)}{\partial x}
++
+\frac{\partial}{\partial y}
+\left(hv^2+\frac{1}{2}gh^2\right)
+=
+-gh\frac{\partial z}{\partial y}
++
+S_{fy},
+\]
+
+where $g$ is the gravitational acceleration, $z$ is the terrain elevation, and $S_{fx}$ and $S_{fy}$ are the friction source terms in the respective directions.
+
+The left-hand side of each equation describes the temporal and spatial changes in momentum. The right-hand side represents the forces acting on the water.
+
+The terrain slope terms describe the influence of ground elevation on water movement. The friction source terms represent resistance caused by the ground surface. Friction may be represented using an appropriate formulation, such as Manning's equation, depending on the model configuration and the availability of surface roughness data.
+
+In the proposed study, these equations will provide the physical constraints for the prediction of horizontal water velocity and flood behavior.
 
 \subsection{Governing Equations for Flood Flow}
 
-Present the governing equations used to describe flood flow, including the relevant flux terms and source terms associated with terrain slope and friction.
+% Present the governing equations used to describe flood flow, including the relevant flux terms and source terms associated with terrain slope and friction.
+
+The governing equations of the proposed model consist of the continuity equation and the two momentum equations. Together, they represent the conservation of mass and momentum in two-dimensional shallow water flow.
+
+The system may be written as
+
+\[
+\begin{cases}
+\displaystyle
+\frac{\partial h}{\partial t}
++
+\frac{\partial (hu)}{\partial x}
++
+\frac{\partial (hv)}{\partial y}
+=R-D,\\[1.2em]
+\displaystyle
+\frac{\partial (hu)}{\partial t}
++
+\frac{\partial}{\partial x}
+\left(hu^2+\frac{1}{2}gh^2\right)
++
+\frac{\partial (huv)}{\partial y}
+=-gh\frac{\partial z}{\partial x}+S_{fx},\\[1.2em]
+\displaystyle
+\frac{\partial (hv)}{\partial t}
++
+\frac{\partial (huv)}{\partial x}
++
+\frac{\partial}{\partial y}
+\left(hv^2+\frac{1}{2}gh^2\right)
+=-gh\frac{\partial z}{\partial y}+S_{fy}.
+\end{cases}
+\]
+
+The system describes the changes in water depth and horizontal velocity over the computational domain.
+
+The terrain elevation function $z(x,y)$ provides information about the ground surface. Rainfall $R(x,y,t)$ represents the water input, while $D(x,y,t)$ may be used to represent a simplified drainage-removal rate. Initial and boundary conditions are also necessary to define the state of the water system at the beginning of the simulation and along the boundaries of the modeled area.
+
+The governing equations will be used to construct the physics-based residuals of the proposed PINN.
 
 \subsection{Physics-Informed Neural Network Framework}
 
-Discuss the mathematical structure of the PINN, including its neural network architecture, input and output variables, automatic differentiation, and incorporation of the governing equations.
+% Discuss the mathematical structure of the PINN, including its neural network architecture, input and output variables, automatic differentiation, and incorporation of the governing equations.
+
+The proposed PINN will approximate the solution of the governing equations using a neural network. The network will receive spatial, temporal, and environmental variables as inputs and generate estimates of water depth and horizontal water velocity.
+
+The proposed input and output variables are represented as
+
+\[
+\mathbf{X}=(x,y,t,R,z,D),
+\]
+
+and
+
+\[
+\mathbf{Y}_{\theta}=(h_{\theta},u_{\theta},v_{\theta}),
+\]
+
+where $\theta$ represents the trainable parameters of the neural network.
+
+The input variables describe the location, time, rainfall, terrain elevation, and simplified drainage representation. The output variables represent the predicted water depth and the horizontal velocity components.
+
+The network may be expressed as
+
+\[
+\mathbf{Y}_{\theta}
+=
+f_{\theta}(x,y,t,R,z,D).
+\]
+
+The governing equations are incorporated into the training process through their residuals. These residuals are calculated using automatic differentiation, which allows the neural network to compute the required derivatives of its predicted outputs with respect to spatial and temporal coordinates.
+
+The continuity residual may be defined as
+
+\[
+r_c=
+\frac{\partial h_{\theta}}{\partial t}
++
+\frac{\partial (h_{\theta}u_{\theta})}{\partial x}
++
+\frac{\partial (h_{\theta}v_{\theta})}{\partial y}
+-R+D.
+\]
+
+The momentum residuals may be defined as
+
+\[
+\begin{aligned}
+r_x={}&
+\frac{\partial (h_{\theta}u_{\theta})}{\partial t}
++
+\frac{\partial}{\partial x}
+\left(h_{\theta}u_{\theta}^{2}
++\frac{1}{2}gh_{\theta}^{2}\right)\\
+&+
+\frac{\partial (h_{\theta}u_{\theta}v_{\theta})}{\partial y}
++
+gh_{\theta}\frac{\partial z}{\partial x}
+-S_{fx},
+\end{aligned}
+\]
+
+and
+
+\[
+\begin{aligned}
+r_y={}&
+\frac{\partial (h_{\theta}v_{\theta})}{\partial t}
++
+\frac{\partial (h_{\theta}u_{\theta}v_{\theta})}{\partial x}\\
+&+
+\frac{\partial}{\partial y}
+\left(h_{\theta}v_{\theta}^{2}
++\frac{1}{2}gh_{\theta}^{2}\right)
++
+gh_{\theta}\frac{\partial z}{\partial y}
+-S_{fy}.
+\end{aligned}
+\]
+
+The residuals measure the extent to which the network's predictions satisfy the governing equations. Ideally, the residuals approach zero at the sampled points within the computational domain.
 
 \subsection{Loss Function of a PINN}
 
-Explain the components of the PINN loss function, including the data loss, initial and boundary condition losses, and physics-based residual loss. Discuss how these components guide the network toward physically consistent solutions.
+% Explain the components of the PINN loss function, including the data loss, initial and boundary condition losses, and physics-based residual loss. Discuss how these components guide the network toward physically consistent solutions.
+
+The loss function is an essential component of the PINN because it determines how the network parameters are updated during training. The proposed model will use a composite loss function that combines data-based and physics-based constraints.
+
+The total loss function may be expressed as
+
+\[
+\mathcal{L}(\theta)
+=
+\mathcal{L}_{data}
++
+\lambda_{PDE}\mathcal{L}_{PDE}
++
+\lambda_{BC}\mathcal{L}_{BC}
++
+\lambda_{IC}\mathcal{L}_{IC},
+\]
+
+where $\mathcal{L}_{data}$ is the data loss, $\mathcal{L}_{PDE}$ is the governing-equation residual loss, $\mathcal{L}_{BC}$ is the boundary condition loss, $\mathcal{L}_{IC}$ is the initial condition loss, and the $\lambda$ terms are weighting parameters.
+
+The data loss measures the difference between the predicted values and the available reference observations. It may be represented using the mean squared error:
+
+\[
+\mathcal{L}_{data}
+=
+\frac{1}{N_d}
+\sum_{i=1}^{N_d}
+\left\|
+\mathbf{Y}_{\theta}^{(i)}
+-
+\mathbf{Y}_{ref}^{(i)}
+\right\|^2,
+\]
+
+where $N_d$ is the number of reference data points and $\mathbf{Y}_{ref}$ represents the observed or reference solution.
+
+The physics-based loss measures the residuals of the governing equations:
+
+\[
+\mathcal{L}_{PDE}
+=
+\frac{1}{N_f}
+\sum_{i=1}^{N_f}
+\left[
+(r_c^{(i)})^2
++
+(r_x^{(i)})^2
++
+(r_y^{(i)})^2
+\right],
+\]
+
+where $N_f$ is the number of collocation points sampled within the computational domain.
+
+The boundary condition loss measures the difference between the network predictions and the prescribed boundary values:
+
+\[
+\mathcal{L}_{BC}
+=
+\frac{1}{N_b}
+\sum_{i=1}^{N_b}
+\left\|
+\mathbf{Y}_{\theta}^{(i)}
+-
+\mathbf{Y}_{BC}^{(i)}
+\right\|^2.
+\]
+
+The initial condition loss measures the difference between the predicted and prescribed initial states:
+
+\[
+\mathcal{L}_{IC}
+=
+\frac{1}{N_i}
+\sum_{i=1}^{N_i}
+\left\|
+\mathbf{Y}_{\theta}(x_i,y_i,0)
+-
+\mathbf{Y}_{IC}^{(i)}
+\right\|^2.
+\]
+
+The weighting parameters determine the relative importance of the individual loss components. Appropriate weighting is necessary because the terms may have different numerical scales. The loss function will guide the network toward approximating the reference solution while satisfying the physical constraints of water flow.
 
 \section{Review of Related Literature}
 
-This section discusses existing literature, concepts, and theoretical discussions related to flood prediction, hydrodynamic modeling, and the application of machine learning and Physics-Informed Neural Networks.
+% This section discusses existing literature, concepts, and theoretical discussions related to flood prediction, hydrodynamic modeling, and the application of machine learning and Physics-Informed Neural Networks.
+
+This section discusses existing literature and theoretical discussions related to flood prediction, hydrodynamic modeling, the Shallow Water Equations, and the application of machine learning and Physics-Informed Neural Networks.
 
 \subsection{Flood Prediction and Modeling}
 
-Review the existing approaches used in flood prediction and modeling, including traditional mathematical and computational techniques.
+% Review the existing approaches used in flood prediction and modeling, including traditional mathematical and computational techniques.
+
+Flood prediction and modeling involve estimating the behavior of floodwater under specified environmental and hydrological conditions. These approaches may be used to estimate water depth, flow velocity, inundation extent, and the temporal development of flooding.
+
+Traditional flood modeling commonly relies on hydrological and hydrodynamic methods. Hydrological models describe the transformation of rainfall into runoff, while hydrodynamic models represent the movement of water through rivers, channels, and surface areas. The selection of a modeling approach depends on the purpose of the study, the available data, and the level of detail required.
+
+Guo, Guan, and Yu (2021) reviewed urban surface water flood modeling approaches and discussed the use of drainage network models, shallow-water-based models, hydrogeomorphic approaches, and other methods. Their review emphasized the importance of considering computational efficiency, model complexity, and data availability when selecting a flood modeling approach.
+
+The literature indicates that flood prediction requires a balance between computational efficiency and the ability to represent physical processes. This consideration is relevant to the present study, which investigates the use of a PINN as an alternative computational approach for solving the governing equations of flood flow.
 
 \subsection{Flood Modeling in Urban Areas}
 
-Discuss the challenges of urban flood modeling, including complex terrain, land use, drainage systems, and surface runoff.
+% Discuss the challenges of urban flood modeling, including complex terrain, land use, drainage systems, and surface runoff.
+
+Urban flood modeling presents additional challenges because of the complex characteristics of developed environments. Buildings, roads, drainage networks, and variations in terrain elevation influence the direction and accumulation of water. Impermeable surfaces may also increase surface runoff during rainfall events.
+
+Guo et al. (2021) explained that urban surface water flood models may use simplified or full forms of the Shallow Water Equations. The complexity of the model affects the required input data, computational cost, and the amount of flood information that can be represented.
+
+Urban flood models may also consider the interaction between surface water and underground drainage systems. However, detailed representations of drainage networks require information about pipes, inlets, outlets, and other infrastructure. The availability of these data may affect the complexity and reliability of the model.
+
+For the present study, urban flood modeling will focus on the selected area of Pasig City. Terrain elevation and rainfall will be considered as important inputs. Drainage may be represented through a simplified removal term, subject to the availability of suitable data. The study will not attempt to fully simulate every component of the underground drainage infrastructure.
 
 \subsection{Shallow Water Equation Applications}
 
-Review the applications of the Shallow Water Equations in simulating water movement, flood propagation, and water depth distribution.
+% Review the applications of the Shallow Water Equations in simulating water movement, flood propagation, and water depth distribution.
+
+The Shallow Water Equations are widely applied in flood modeling because they describe the conservation of mass and momentum in depth-averaged water flow. They can be used to estimate the movement and distribution of water over terrain.
+
+SWE-based models may be implemented using different numerical methods, including finite difference, finite volume, and finite element approaches. These methods approximate the governing equations using discrete computational representations.
+
+Guo et al. (2021) discussed the application of shallow-water-based models to urban surface flooding and noted their ability to provide spatially distributed information about floodwater depth and velocity. The review also highlighted that the computational cost and data requirements of such models may increase when detailed urban features are considered.
+
+The SWE are relevant to the present study because they provide the physical basis for the proposed PINN. By incorporating the equations into the neural network loss function, the model will be trained to approximate flood behavior while considering the governing principles of water flow.
 
 \subsection{Physics-Informed Neural Networks in Hydrology}
 
-Discuss the use of PINNs in hydrological modeling, particularly their ability to incorporate physical constraints into data-driven prediction models.
+% Discuss the use of PINNs in hydrological modeling, particularly their ability to incorporate physical constraints into data-driven prediction models.
+
+Physics-Informed Neural Networks have been investigated as a computational approach for solving differential equations and incorporating physical knowledge into machine learning models. The framework introduced by Raissi et al. (2019) combines neural network approximation with governing differential equations through a composite loss function.
+
+In hydrological applications, PINNs may be used to represent processes governed by mathematical equations, such as water flow, groundwater movement, and rainfall-related processes. Their ability to combine physical constraints and available observations makes them relevant to problems in which data may be limited or incomplete.
+
+However, the use of PINNs in hydrological modeling also presents challenges. The optimization process may be affected by the nonlinear behavior of the governing equations, differences in the scales of loss components, and the distribution of training points. Therefore, the performance of a PINN depends not only on the physical equations but also on its architecture, training configuration, and evaluation process.
+
+The present study applies this framework to the two-dimensional Shallow Water Equations. The governing equations will be incorporated into the PINN loss function to constrain the predicted water depth and horizontal velocity.
 
 \subsection{Machine Learning for Flood Prediction}
 
-Review machine learning approaches used in flood prediction, including artificial neural networks and other data-driven methods. Discuss their strengths and limitations.
+% Review machine learning approaches used in flood prediction, including artificial neural networks and other data-driven methods. Discuss their strengths and limitations.
+
+Machine learning approaches have been used in flood prediction to identify relationships between rainfall, water levels, and flood-related variables. Artificial Neural Networks and Long Short-Term Memory (LSTM) networks are examples of approaches that can learn patterns from historical or simulated data.
+
+LSTM networks are designed to process sequential information. Their structure allows them to learn temporal relationships in data, making them suitable for tasks involving rainfall sequences, water-level records, and time-dependent flood behavior.
+
+Data-driven approaches may provide efficient predictions when sufficient training data are available. However, their predictions depend on the patterns learned from the training data. They do not automatically satisfy the governing equations of water flow unless physical constraints are explicitly incorporated.
+
+PINNs differ from purely data-driven models because they include physical equations as part of the training objective. This distinction is important in the present study, where the proposed model will be evaluated based on both approximation error and physical consistency.
+
+A classical numerical method will be used as the primary comparison method for assessing the PINN's approximation of the Shallow Water Equations. If an LSTM model is included as an additional baseline, its prediction accuracy may be evaluated using the same reference dataset and error metrics. The LSTM comparison will be treated as a separate data-driven evaluation.
 
 \subsection{Flood Risk in Pasig City and Metro Manila}
 
-Discuss the flood-related conditions and challenges in Pasig City and Metro Manila. Include relevant information about rainfall, river systems, urban development, and flood susceptibility.
+% Discuss the flood-related conditions and challenges in Pasig City and Metro Manila. Include relevant information about rainfall, river systems, urban development, and flood susceptibility.
+
+Metro Manila is a highly urbanized region where flood behavior may be influenced by rainfall, river systems, terrain, and urban infrastructure. Flood modeling in the region requires consideration of both the hydrological conditions and the characteristics of the built environment.
+
+The Marikina-Pasig River Basin has been the subject of flood modeling research. A study published in the Journal of Hydrology: Regional Studies in 2022 developed an integrated multiscale rainfall-runoff and inundation model for an extreme rainfall event in the Marikina-Pasig River Basin. The study examined floodwater accumulation, depth, and flow source, demonstrating the relevance of integrated modeling approaches in the Philippine setting.
+
+The study provides regional context for the present research because Pasig City is located within the broader Metro Manila urban environment associated with the Pasig River system. However, the results of a basin-level study cannot automatically be applied to every location within Pasig City. Local terrain, rainfall conditions, and available flood observations must be considered.
+
+The present study will focus on the development and evaluation of a SWE-based PINN within a selected study area in Pasig City. Its findings will be limited to the modeled area and the datasets used in the implementation.
 
 \section{Review of Related Studies}
 
-This section presents previous research studies that are directly related to the proposed research. Focus on the methods, datasets, results, and findings of each study.
+% This section presents previous research studies that are directly related to the proposed research. Focus on the methods, datasets, results, and findings of each study.
+
+This section presents previous research studies directly related to the proposed study. The discussion focuses on the methods, governing equations, datasets, findings, and limitations of the selected studies.
 
 \subsection{SWE-Based Flood Prediction Studies}
 
-Review previous studies that used the Shallow Water Equations for flood simulation and prediction. Discuss their numerical methods, model performance, and findings.
+% Review previous studies that used the Shallow Water Equations for flood simulation and prediction. Discuss their numerical methods, model performance, and findings.
+
+SWE-based flood prediction studies commonly use numerical methods to solve the governing equations of water flow. These methods include finite difference, finite volume, and finite element approaches. They are used to approximate water depth and velocity over a computational domain.
+
+Guo et al. (2021) conducted a comprehensive review of urban surface water flood modeling approaches. Their study discussed the application of full and simplified Shallow Water Equations in urban flood simulation. It also identified computational efficiency, model complexity, and the availability of high-quality input data as important challenges in urban flood modeling.
+
+The review provides a foundation for the present study because it establishes the relevance of SWE-based approaches in representing urban surface water flooding. However, the review primarily examines existing modeling approaches rather than developing a PINN specifically for Pasig City.
+
+The present study builds on the use of SWE as the governing mathematical model and investigates whether a neural network can approximate its solutions while maintaining physical consistency.
 
 \subsection{PINN-Based Flood Prediction Studies}
 
-Present research studies that implemented Physics-Informed Neural Networks for flood prediction. Discuss their model architectures, governing equations, training methods, and evaluation metrics.
+% Present research studies that implemented Physics-Informed Neural Networks for flood prediction. Discuss their model architectures, governing equations, training methods, and evaluation metrics.
+
+Liu et al. (2026) developed a PINN framework for urban flood depth prediction that integrates data-driven information with physical constraints. The study used the Shallow Water Equations to incorporate physical principles into the neural network and examined the use of feature selection to improve the efficiency of urban waterlogging prediction.
+
+The study is particularly relevant to the present research because it directly applies PINNs to urban flood depth prediction. It demonstrates the use of physical constraints within a neural network framework and highlights the potential of combining data-driven information with governing equations.
+
+However, the study was conducted in Hongshan District, Wuhan, China. Its findings and model configuration may not directly represent the conditions of Pasig City. Differences in terrain, rainfall patterns, drainage infrastructure, and available observations may affect model performance.
+
+The present study will investigate the application of a SWE-based PINN to a selected area of Pasig City. It will focus on the convergence and approximation error of the model and its ability to satisfy the conservation laws of water flow. The PINN will also be compared with a classical numerical method using an appropriate reference solution.
 
 \subsection{PINN Applications in Hydrodynamics}
 
-Review studies that applied PINNs to hydrodynamic problems, particularly those involving fluid flow, water movement, and conservation laws.
+% Review studies that applied PINNs to hydrodynamic problems, particularly those involving fluid flow, water movement, and conservation laws.
+
+Tian et al. (2025) investigated the use of Physics-Informed Neural Networks for solving the two-dimensional Shallow Water Equations with terrain topography and rainfall source terms. Their study examined different equation formulations and techniques for improving PINN performance.
+
+The researchers evaluated PINNs through a series of static and dynamic flow cases involving terrain and rainfall. Their findings indicated that the formulation of the governing equations can influence the performance of the PINN. The study also discussed challenges related to training convergence and the approximation of shallow water flow.
+
+This study is directly relevant to the present research because it investigates the same governing mathematical system. It provides a basis for incorporating terrain and rainfall into the proposed PINN framework.
+
+However, the cases considered by Tian et al. (2025) were designed for evaluating the mathematical capability of PINNs to solve the SWE. Their study does not establish the performance of a model implemented in Pasig City. The present research will extend the investigation to a selected urban study area using the available local data.
 
 \subsection{Flood Prediction Studies in the Philippines}
 
-Present previous research conducted in the Philippines concerning flood prediction, flood modeling, and flood risk assessment. Discuss the methodologies and findings relevant to the selected study area.
+% Present previous research conducted in the Philippines concerning flood prediction, flood modeling, and flood risk assessment. Discuss the methodologies and findings relevant to the selected study area.
+
+Flood prediction studies in the Philippines have investigated rainfall-runoff modeling, flood inundation simulation, and the application of hydrodynamic models to river basins and urban environments.
+
+A study published in the Journal of Hydrology: Regional Studies in 2022 developed an integrated multiscale rainfall-runoff and inundation model for an extreme rainfall event in the Marikina-Pasig River Basin. The model was designed to simulate floodwater accumulation, depth, and flow source using variable grid sizes.
+
+The study is relevant because it demonstrates the application of computational flood modeling within a Philippine river basin. It also provides a regional reference for the present research, which focuses on flood modeling in Pasig City.
+
+Nevertheless, the study used a different modeling framework from the proposed SWE-based PINN. It did not specifically investigate the convergence, approximation error, and physical residuals of a PINN implemented in Pasig City. This difference supports the need to evaluate the proposed approach within the selected study area.
 
 \section{Synthesis of Literature}
 
-Summarize the common findings, approaches, and limitations identified in the reviewed literature and studies. Discuss the similarities and differences between traditional hydrodynamic models, machine learning approaches, and Physics-Informed Neural Networks.
+% Summarize the common findings, approaches, and limitations identified in the reviewed literature and studies. Discuss the similarities and differences between traditional hydrodynamic models, machine learning approaches, and Physics-Informed Neural Networks.
+
+The reviewed literature establishes that flood prediction requires the representation of physical processes that govern the movement and accumulation of water. Traditional hydrodynamic models use mathematical equations and numerical methods to simulate water flow. Among these, the Shallow Water Equations are widely used because they describe the conservation of mass and momentum in depth-averaged water flow.
+
+The literature also shows that urban flood modeling presents challenges related to complex terrain, drainage systems, input data availability, and computational efficiency. These challenges are particularly relevant when modeling flood behavior in highly developed areas.
+
+Artificial Neural Networks and other machine learning approaches provide an alternative means of estimating flood-related variables from data. However, purely data-driven models may not automatically satisfy the physical laws governing water flow. Physics-Informed Neural Networks address this limitation by incorporating governing equations into the training process.
+
+Previous studies by Raissi et al. (2019), Liu et al. (2026), and Tian et al. (2025) establish the theoretical and computational basis for using PINNs to solve differential equations and model flood behavior. Meanwhile, the Marikina-Pasig River Basin study provides a regional reference for flood modeling in the Philippines.
+
+Despite these contributions, the performance of a SWE-based PINN depends on the study area, available data, governing equation formulation, training process, and evaluation method. Therefore, the present study will develop and evaluate a PINN for a selected area of Pasig City and compare its predictions with a classical numerical method.
 
 \section{Research Gap}
 
-Identify the limitations and unresolved issues in previous research. Explain the need for further investigation into the convergence, approximation error, and physical consistency of SWE-based Physics-Informed Neural Networks for flood modeling.
+% Identify the limitations and unresolved issues in previous research. Explain the need for further investigation into the convergence, approximation error, and physical consistency of SWE-based Physics-Informed Neural Networks for flood modeling.
+
+Existing studies have demonstrated the use of the Shallow Water Equations in flood modeling and the potential of Physics-Informed Neural Networks in solving nonlinear partial differential equations. Liu et al. (2026) investigated a PINN framework for urban flood depth prediction, while Tian et al. (2025) examined the use of PINNs for solving the two-dimensional SWE with terrain topography and rainfall source terms.
+
+However, the results of these studies were obtained using their respective study areas, datasets, and model configurations. Their findings cannot automatically establish the performance of a SWE-based PINN when implemented in Pasig City.
+
+The present study addresses this gap by developing and evaluating a SWE-based PINN for flood modeling in a selected area of Pasig City. It will examine the model's convergence, approximation error, and physical consistency, particularly its ability to satisfy the conservation of mass and momentum.
+
+The study will also compare the PINN with a classical numerical method using appropriate error metrics. This comparison will provide an assessment of how closely the PINN approximates the reference solution and whether its predictions satisfy the governing equations.
+
+The research gap is therefore centered on the evaluation of the proposed SWE-based PINN within the selected Pasig City study area, particularly in terms of convergence, approximation error, and physical constraint satisfaction.
 
 \section{Relevance to the Present Study}
 
-Explain how the reviewed literature and studies support the development of the proposed SWE-based PINN. Establish the connection between the existing research and the objectives of the present study, particularly its comparison with a classical numerical method.
+% Explain how the reviewed literature and studies support the development of the proposed SWE-based PINN. Establish the connection between the existing research and the objectives of the present study, particularly its comparison with a classical numerical method.
+
+The reviewed literature and studies provide the mathematical, computational, and scientific foundation for the present research.
+
+The Shallow Water Equations provide the governing mathematical model for describing water depth and horizontal velocity. The principles of conservation of mass and momentum establish the physical constraints that the proposed PINN must satisfy.
+
+The work of Raissi et al. (2019) provides the theoretical foundation for incorporating differential equations into neural network training. The study of Liu et al. (2026) provides a direct reference for applying PINNs to urban flood depth prediction. Meanwhile, Tian et al. (2025) provides a relevant mathematical and computational reference for solving the two-dimensional SWE with terrain topography and rainfall source terms.
+
+The reviewed urban flood modeling literature also establishes the importance of considering terrain, rainfall, drainage representation, and data availability. These considerations will guide the selection and preparation of the input data for the Pasig City implementation.
+
+The present study will use these foundations to develop a PINN that predicts water depth and horizontal velocity. Its performance will be evaluated through convergence, approximation error, and physical consistency, and compared with a classical numerical method. Through this evaluation, the study aims to examine the applicability of a physics-informed computational approach to flood modeling in the selected study area.
 
 \section{Chapter Summary}
 
-Provide a summary of the important concepts, theories, literature, and studies discussed in this chapter. Highlight how these establish the foundation for the methodology and model development presented in the succeeding chapter.
+% Provide a summary of the important concepts, theories, literature, and studies discussed in this chapter. Highlight how these establish the foundation for the methodology and model development presented in the succeeding chapter.
+
+This chapter presented the fundamental concepts, mathematical theories, related literature, and previous studies relevant to the development of a Shallow Water Equation-based Physics-Informed Neural Network for flood modeling in Pasig City.
+
+The discussion introduced flooding, hydrodynamic modeling, artificial neural networks, and Physics-Informed Neural Networks. It also presented the Shallow Water Equations, including the principles of conservation of mass and momentum, and explained how the governing equations can be incorporated into the PINN loss function.
+
+The reviewed literature and studies established the relevance of SWE-based flood modeling and the use of PINNs in solving differential equations. They also identified challenges associated with urban flood modeling, including data availability, computational requirements, and the complexity of representing physical processes.
+
+The research gap identified in this chapter concerns the development and evaluation of a SWE-based PINN for a selected area of Pasig City, particularly in terms of convergence, approximation error, and physical constraint satisfaction. These concepts and findings provide the foundation for the research methodology, model development, and evaluation procedures presented in the succeeding chapter.
