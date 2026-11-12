@@ -20,15 +20,25 @@ Despite these developments, important gaps remain. The framework of \citeA{liu20
 In this study, a Shallow Water Equation-based Physics-Informed Neural Network will be developed and implemented in a selected area of Pasig City. The proposed model will be evaluated in terms of its convergence, approximation error, and ability to satisfy physical constraints. Its performance will also be compared with a classical numerical method to determine its effectiveness in solving the Shallow Water Equations for flood modeling.
 \section{Statement of the Problem}
 
-Flooding remains a significant concern in urban areas such as Pasig City, where rainfall, terrain elevation, and water flow conditions influence flood behavior. Predicting the movement and depth of floodwater requires a mathematical model capable of representing the physical processes governing water flow. Although classical numerical methods can solve the Shallow Water Equations, their computational requirements may pose challenges. Meanwhile, data-driven approaches may not fully account for the physical laws governing water movement.
+Flooding remains a significant concern in urban areas such as Pasig City, where rainfall, terrain elevation, and water flow conditions influence flood behavior. Predicting the movement and depth of floodwater requires a mathematical model that can represent the physical processes governing water flow. The Shallow Water Equations (SWE) provide such a representation, but solving them with classical numerical methods can be computationally demanding and dependent on detailed input data, particularly in complex urban settings \cite{guo2021,liu2026}. Meanwhile, purely data-driven approaches can be fast but depend heavily on their training data and may not satisfy the physical laws governing water movement \cite{liu2026,hybridreview2026}.
 
-This study aims to develop and evaluate a Shallow Water Equation-based Physics-Informed Neural Network (PINN) for flood modeling in Pasig City. Specifically, it seeks to determine the capability of the proposed model to approximate the solutions of the Shallow Water Equations while satisfying the physical constraints of water flow.
+Physics-Informed Neural Networks (PINNs) combine neural network approximation with governing physical equations \cite{raissi2019}. Previous studies have applied PINNs to urban flood depth prediction \cite{liu2026}, to the two-dimensional SWE with terrain topography and rainfall source terms \cite{tian2025}, and to real-time flood prediction from rainfall-runoff data \cite{praveen2024}. However, these studies were conducted using their own study areas, datasets, and model configurations. They relied on simulated, benchmark, or publicly available data, and none of them applied a SWE-based PINN to Pasig City. Systematic comparisons of PINN convergence and approximation error against classical numerical methods across conditions also remain limited \cite{tian2025,hybridreview2026}. It therefore remains unestablished how a SWE-based PINN performs in Pasig City in terms of its convergence, approximation error, and ability to satisfy the conservation of mass and momentum.
 
-The study will seek to answer the following research question:
+The study will seek to answer the following general research question:
 
 \begin{quote}
 How can a Shallow Water Equation-based Physics-Informed Neural Network be developed and evaluated for predicting flood behavior in Pasig City?
 \end{quote}
+
+Specifically, the study will seek to answer the following questions:
+
+\begin{enumerate}
+    \item How can the Shallow Water Equations be formulated as the governing mathematical model for flood and water flow behavior in Pasig City?
+    \item How can a Physics-Informed Neural Network be developed to incorporate the Shallow Water Equations into its training process?
+    \item What are the convergence behavior and approximation error of the proposed PINN in solving the Shallow Water Equations?
+    \item How does the performance of the PINN compare with that of a classical numerical method when evaluated using appropriate error metrics?
+    \item To what extent does the proposed PINN satisfy the physical constraints of water flow, particularly the conservation of water mass and momentum?
+\end{enumerate}
 
 \section{General and Specific Objectives}
 
