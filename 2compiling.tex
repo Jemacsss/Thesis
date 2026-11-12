@@ -444,58 +444,59 @@ The authors also noted that most of these applications remain at an early stage.
 This literature is outside the scope of the present study, which uses classical computation. It is included to show that research on computational approaches for flood prediction is still developing and that physics-informed and hybrid methods such as PINNs are among the practical options currently available.
 \section{Review of Related Studies}
 
-% This section presents previous research studies that are directly related to the proposed research. Focus on the methods, datasets, results, and findings of each study.
-
 This section presents previous research studies directly related to the proposed study. The discussion focuses on the methods, governing equations, datasets, findings, and limitations of the selected studies.
 
 \subsection{SWE-Based Flood Prediction Studies}
 
-% Review previous studies that used the Shallow Water Equations for flood simulation and prediction. Discuss their numerical methods, model performance, and findings.
-
 SWE-based flood prediction studies commonly use numerical methods to solve the governing equations of water flow. These methods include finite difference, finite volume, and finite element approaches. They are used to approximate water depth and velocity over a computational domain.
 
-Guo et al. (2021) conducted a comprehensive review of urban surface water flood modeling approaches. Their study discussed the application of full and simplified Shallow Water Equations in urban flood simulation. It also identified computational efficiency, model complexity, and the availability of high-quality input data as important challenges in urban flood modeling.
+\citeA{guo2021} conducted a comprehensive review of urban surface water flood modeling approaches. Their study discussed the application of full and simplified Shallow Water Equations in urban flood simulation. It also identified computational efficiency, model complexity, and the availability of high-quality input data as important challenges in urban flood modeling.
 
 The review provides a foundation for the present study because it establishes the relevance of SWE-based approaches in representing urban surface water flooding. However, the review primarily examines existing modeling approaches rather than developing a PINN specifically for Pasig City.
 
-The present study builds on the use of SWE as the governing mathematical model and investigates whether a neural network can approximate its solutions while maintaining physical consistency.
+The present study builds on the use of the SWE as the governing mathematical model and investigates whether a neural network can approximate its solutions while maintaining physical consistency.
 
 \subsection{PINN-Based Flood Prediction Studies}
 
-% Present research studies that implemented Physics-Informed Neural Networks for flood prediction. Discuss their model architectures, governing equations, training methods, and evaluation metrics.
+\citeA{liu2026} developed a Shallow Water Equation-based PINN (SWEPINN) for urban flood depth prediction that integrates data-driven information with physical constraints. The study was conducted in Hongshan District, Wuhan, China. A coupled stormwater drainage and surface-flow simulation covering 50 rainstorm scenarios was used to construct the dataset. Nine spatial features and fourteen rainfall features were selected using geographic detectors and backward selection, the model was trained to predict maximum flood depth, hyperparameters were tuned using Bayesian optimization, and SHAP analysis was used to interpret feature contributions. The SWEPINN outperformed DNN, CNN, and LSTM models, achieving an $R^2$ of 0.952, a mean absolute error of 0.068, and a mean squared error of 0.013. Elevation and manhole features were among the most influential.
 
-Liu et al. (2026) developed a PINN framework for urban flood depth prediction that integrates data-driven information with physical constraints. The study used the Shallow Water Equations to incorporate physical principles into the neural network and examined the use of feature selection to improve the efficiency of urban waterlogging prediction.
+The study is particularly relevant to the present research because it directly applies a SWE-based PINN to urban flood depth prediction. However, it was developed and evaluated for a single urban area, relied on simulated rather than observed flood data, and required high-quality, location-specific spatial data. Differences in terrain, rainfall patterns, drainage infrastructure, and available observations may affect how its configuration transfers to Pasig City. The study also compared the SWEPINN with other machine learning models rather than analyzing its convergence and error against a classical numerical solver of the SWE.
 
-The study is particularly relevant to the present research because it directly applies PINNs to urban flood depth prediction. It demonstrates the use of physical constraints within a neural network framework and highlights the potential of combining data-driven information with governing equations.
+\citeA{praveen2024} developed a PINN for real-time flood prediction using rainfall-runoff data. A Kaggle dataset of 50,000 rows and 21 columns was cleaned, split, and normalized, and features were selected using principal component analysis and a multi-feature algorithm. The PINN was trained using both data and physical constraints and was compared with ANN and LSTM models. It achieved an accuracy of 93.49\%, a root mean square error of 0.3140, and a mean absolute error of 0.2169, outperformed both baselines, and could predict flood conditions with a lead time of at least one hour.
 
-However, the study was conducted in Hongshan District, Wuhan, China. Its findings and model configuration may not directly represent the conditions of Pasig City. Differences in terrain, rainfall patterns, drainage infrastructure, and available observations may affect model performance.
+The study shows the potential of physics-informed models for real-time flood prediction. However, because it relied on a publicly available dataset, its real-world performance requires further validation, and testing across locations and extreme flood events was limited.
 
 The present study will investigate the application of a SWE-based PINN to a selected area of Pasig City. It will focus on the convergence and approximation error of the model and its ability to satisfy the conservation laws of water flow. The PINN will also be compared with a classical numerical method using an appropriate reference solution.
 
 \subsection{PINN Applications in Hydrodynamics}
 
-% Review studies that applied PINNs to hydrodynamic problems, particularly those involving fluid flow, water movement, and conservation laws.
+\citeA{tian2025} investigated the use of PINNs for solving the two-dimensional Shallow Water Equations with terrain topography and rainfall source terms. The PINN takes the spatial and temporal coordinates as inputs and predicts water depth and the two horizontal velocity components, with the governing equations, initial conditions, and boundary conditions included in the loss function. The researchers compared three equation formulations (conservation, primitive variables, and variable-conservation forms), imposed non-negative depth and dry-wet conditions, and tested an additional energy or entropy condition. To improve training, they used a dimensional transformation and neuron-wise local adaptive activation functions.
 
-Tian et al. (2025) investigated the use of Physics-Informed Neural Networks for solving the two-dimensional Shallow Water Equations with terrain topography and rainfall source terms. Their study examined different equation formulations and techniques for improving PINN performance.
+The PINN was evaluated on eleven cases: static water over different terrains, rainfall over flat and complex terrain, pseudo-two-dimensional and circular dam-break problems, tidal flow over uneven terrain, and tidal flow combined with rainfall. Results were compared with exact solutions or with classical schemes, namely the HLL scheme and an entropy-stable scheme, using mean absolute error and root mean square error. For the static terrain cases, errors were approximately in the range of $10^{-4}$ to $10^{-5}$. The variable-conservation form generally performed better than the primitive variables form. In the pseudo-two-dimensional dam-break case, the PINN solution was closer to the exact solution than the first-order HLL solution used in that comparison, although the authors emphasized that this does not show that PINNs are generally superior to classical methods. In the rainfall cases, errors did not necessarily accumulate over time as they can in time-stepping schemes, but they were larger at higher rainfall intensities. The additional entropy condition did not consistently improve results, caused excessive smoothing in the dam-break case, and could lead to training instability.
 
-The researchers evaluated PINNs through a series of static and dynamic flow cases involving terrain and rainfall. Their findings indicated that the formulation of the governing equations can influence the performance of the PINN. The study also discussed challenges related to training convergence and the approximation of shallow water flow.
+This study is directly relevant to the present research because it investigates the same governing mathematical system and compares a PINN with classical numerical solutions. It provides a basis for incorporating terrain and rainfall into the proposed PINN framework.
 
-This study is directly relevant to the present research because it investigates the same governing mathematical system. It provides a basis for incorporating terrain and rainfall into the proposed PINN framework.
+However, the cases considered by \citeA{tian2025} were controlled benchmark and synthetic cases designed to evaluate the mathematical capability of PINNs to solve the SWE. The study does not establish the performance of a model implemented in a real-world location such as Pasig City, and a more systematic comparison of convergence, approximation error, efficiency, and stability with classical methods across a wider range of conditions remains open. The present research will extend the investigation to a selected urban study area using the available local data.
 
-However, the cases considered by Tian et al. (2025) were designed for evaluating the mathematical capability of PINNs to solve the SWE. Their study does not establish the performance of a model implemented in Pasig City. The present research will extend the investigation to a selected urban study area using the available local data.
+The foundational work of \citeA{raissi2019} applied the PINN framework to problems including the Navier-Stokes, nonlinear Schr\"odinger, Allen-Cahn, and Korteweg-de Vries equations. Their results showed that PINNs could solve these nonlinear equations with relatively limited labeled data and could identify unknown parameters in inverse problems. They did not, however, provide a complete theoretical explanation of why training converges to accurate solutions, nor guarantees on convergence, stability, or error bounds. This leaves room for studies, such as the present one, that evaluate convergence and approximation error for a specific application.
+
+\subsection{Data-Driven and Hybrid Flood Prediction Studies}
+
+\citeA{dikebreach2024} developed an LSTM neural network to predict flood inundation after a dike breach. Because historical flood data for the study area were insufficient, 73 scenarios were generated using a one-dimensional and two-dimensional hydrodynamic model and divided into 43 training, 15 validation, and 15 testing scenarios. Hyperparameters were selected using Bayesian optimization over 50 combinations, with a best configuration of 928 LSTM neurons, a dropout of 0.25, and a learning rate of 0.001. On the unseen test scenarios, the model achieved a mean absolute error of 0.045 m (about 3\% of the mean depth of 1.49 m), a root mean square error of 0.13 m, and a critical success index of 94\% for flood extent. It required about 0.1 to 0.3 seconds per prediction compared with 6 to 10 hours for the hydrodynamic model. Its limitations were its dependence on simulated data, its location-specific nature, its need for many simulations, the absence of explicit physical constraints, and weak performance immediately after the breach.
+
+This study illustrates the efficiency of data-driven models and the limitation that motivates PINNs: without explicit physics, a model learns patterns from data, including any errors in the simulations used to train it.
+
+\citeA{hybridreview2026} conducted a systematic review of hybrid flood inundation models. They searched Scopus and Web of Science, screened the results using defined criteria, and reviewed the selected journal articles, conference papers, reviews, and a book chapter in full. They found that hybrid models aim to combine the realism of hydrodynamic models with the speed of machine learning, and that PINNs are especially promising. They also found no consistent way of comparing hybrid flood models because studies use different datasets, scenarios, and evaluation metrics. Hybrid models still face data dependency, limited generalization to new situations, complexity, retraining requirements, and black-box behavior. The authors proposed a standardized benchmarking framework in which hybrid, hydrodynamic, and standalone machine learning models are tested under the same data, conditions, computational resources, and evaluation measures.
+
+This review supports the design of the present study, which compares the PINN with a classical numerical method using the same reference solution and error metrics.
 
 \subsection{Flood Prediction Studies in the Philippines}
 
-% Present previous research conducted in the Philippines concerning flood prediction, flood modeling, and flood risk assessment. Discuss the methodologies and findings relevant to the selected study area.
-
 Flood prediction studies in the Philippines have investigated rainfall-runoff modeling, flood inundation simulation, and the application of hydrodynamic models to river basins and urban environments.
-
-A study published in the Journal of Hydrology: Regional Studies in 2022 developed an integrated multiscale rainfall-runoff and inundation model for an extreme rainfall event in the Marikina-Pasig River Basin. The model was designed to simulate floodwater accumulation, depth, and flow source using variable grid sizes.
 
 The study is relevant because it demonstrates the application of computational flood modeling within a Philippine river basin. It also provides a regional reference for the present research, which focuses on flood modeling in Pasig City.
 
 Nevertheless, the study used a different modeling framework from the proposed SWE-based PINN. It did not specifically investigate the convergence, approximation error, and physical residuals of a PINN implemented in Pasig City. This difference supports the need to evaluate the proposed approach within the selected study area.
-
 \section{Synthesis of Literature}
 
 % Summarize the common findings, approaches, and limitations identified in the reviewed literature and studies. Discuss the similarities and differences between traditional hydrodynamic models, machine learning approaches, and Physics-Informed Neural Networks.
